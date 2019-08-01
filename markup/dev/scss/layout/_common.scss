@@ -22,6 +22,10 @@ iframe {
     width: 100%;
 }
 
+h1{
+    font-weight: 300;
+}
+
 a[href^=tel],
 a[href^=fax],
 a[href^=skype] {
@@ -62,6 +66,14 @@ a[href^=skype] {
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
     overflow: hidden;
     border-radius: 0 0 4px 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s ease-in-out;
+
+    &.show{
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 .todo-list {
@@ -74,6 +86,10 @@ a[href^=skype] {
 .todo-item {
     position: relative;
     padding: 5px 10px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    transition: 0.5s ease-in-out;
     &:hover {
         .todo-item-remove {
             opacity: 1;
@@ -83,12 +99,21 @@ a[href^=skype] {
     &:not(:last-child) {
         border-bottom: 1px solid $gray-600;
     }
+    &.complate{
+        
+
+        .todo-item-text{
+            opacity: 0.5;
+
+            &:before{
+                width: 100%;
+            }
+        }
+    }
     label {
         margin-bottom: 0;
-        display: flex;
-        align-items: center;
     }
-    input[type='radio'] {
+    input[type='checkbox'] {
         display: none;
         &:checked {
             +.todo-item-check {
@@ -123,7 +148,19 @@ a[href^=skype] {
 }
 
 .todo-item-text {
-    width: calc(100% - 65px);
+    position: relative;
+    opacity: 1;
+    transition: 0.5s opacity ease-in-out;
+    &:before{
+        content:'';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 2px;
+        background-color: $gray-600;
+        transition: 0.5s width ease-in-out;
+    }
 }
 
 .todo-item-remove {
@@ -181,6 +218,17 @@ a[href^=skype] {
             color: $white;
             text-decoration: none;
         }
+    }
+}
+
+.clear-all{
+    text-decoration: none;
+    color: inherit;
+    transition: 0.5s color ease-in-out;
+
+    &:hover{
+        color: $blue;
+        text-decoration: none;
     }
 }
 

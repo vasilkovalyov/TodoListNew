@@ -16,14 +16,6 @@ include pug/common/_head
 								
 								.main-todo-wrapper
 									ul.todo-list
-										li.todo-item
-											label
-												input(
-													type="radio"
-												)
-												span.todo-item-check
-												span.todo-item-text Lorem ipsum dolor
-												span.todo-item-remove
 									.todo-statistic.d-flex.align-items-center.justify-content-between
 										span.left-items.d-flex.align-items-center.flex-wrap.justify-content-center
 											.counter 0
@@ -35,5 +27,5 @@ include pug/common/_head
 												a(href='#') Active
 											li
 												a(href='#') Completed
-										span.clear-all.text-center Clear completed
+										a(href='#').clear-all.text-center Clear completed
 
