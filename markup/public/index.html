@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>TodoList</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="wrapper" id="wrapper">
+			<main id="main" role="main">
+				<section class="todo-app">
+					<div class="container">
+						<div class="caption text-center font-weight-light">
+							<h1>TodoListApp</h1>
+							<div class="todo-holder">
+								<div class="input-holder d-flex">
+									<input class="text-center" type="text" placeholder="What need to be done?">
+									<button class="btn btn-danger">Add</button>
+								</div>
+								<div class="main-todo-wrapper">
+									<ul class="todo-list">
+										<li class="todo-item">
+											<label>
+												<input type="radio"><span class="todo-item-check"></span><span class="todo-item-text">Lorem ipsum dolor</span><span class="todo-item-remove"></span>
+											</label>
+										</li>
+									</ul>
+									<div class="todo-statistic d-flex align-items-center justify-content-between"><span class="left-items d-flex align-items-center flex-wrap justify-content-center">
+											<div class="counter">0</div>
+											<div class="text">items left</div></span>
+										<ul class="tab-list-links d-flex align-items-center">
+											<li><a href="#">All</a></li>
+											<li><a href="#">Active</a></li>
+											<li><a href="#">Completed</a></li>
+										</ul><span class="clear-all text-center">Clear completed</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>

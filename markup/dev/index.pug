@@ -1,0 +1,39 @@
+include pug/common/_head
+	block content
+			main#main(role="main")
+				section.todo-app
+					.container
+						.caption.text-center.font-weight-light
+							h1 TodoListApp
+
+							.todo-holder
+								.input-holder.d-flex
+									input.text-center(
+										type="text"
+										placeholder="What need to be done?"
+									)
+									button.btn.btn-danger Add
+								
+								.main-todo-wrapper
+									ul.todo-list
+										li.todo-item
+											label
+												input(
+													type="radio"
+												)
+												span.todo-item-check
+												span.todo-item-text Lorem ipsum dolor
+												span.todo-item-remove
+									.todo-statistic.d-flex.align-items-center.justify-content-between
+										span.left-items.d-flex.align-items-center.flex-wrap.justify-content-center
+											.counter 0
+											.text items left
+										ul.tab-list-links.d-flex.align-items-center
+											li
+												a(href='#') All
+											li
+												a(href='#') Active
+											li
+												a(href='#') Completed
+										span.clear-all.text-center Clear completed
+
