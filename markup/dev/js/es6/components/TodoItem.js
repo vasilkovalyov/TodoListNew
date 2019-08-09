@@ -1,10 +1,11 @@
 export class TodoItem {
-    constructor(id, text, trash, complete) {
+    constructor(id, text) {
         this.id = id;
         this.text = text;
-        this.trash = trash;
-        this.complete = complete;
+        this.complete = false;
+        this.trash = false;
     }
+
 
     renderTodoItem = () => {
         const li = document.createElement('li');
