@@ -14,10 +14,10 @@ export class TodoItem {
         const todoContent = `
             <label>
                 <input type="checkbox">
-                <span class="todo-item-check" complete-item='${this.id}' data-type='complate'></span>
+                <span class="todo-item-check" data-key='${this.id}' data-type='complate'></span>
             </label>
             <span class="todo-item-text">${this.text}</span>
-            <span class="todo-item-remove" remove-item='${this.id}' data-type='remove'></span>
+            <span class="todo-item-remove" data-key='${this.id}' data-type='remove'></span>
         `;
         li.insertAdjacentHTML('afterbegin', todoContent);
 

@@ -14,6 +14,7 @@ let LIST = []; // array for event items
 let leftLIST = []; // array for event who else not complete
 let removedLIST = []; // array for removed event items
 let completeLIST = []; // array for completed event items
+let notCompleteLIST = []; // array for not completed event items
 let i = 0;
 
 
@@ -24,34 +25,80 @@ addTodoItem.addEventListener('click', create);
 todoWrapper.addEventListener('click', (e) => {
     const item = e.target.closest('.todo-item');
     const dataType = e.target.getAttribute('data-type');
-    const dataIdRemove = e.target.getAttribute('remove-item');
-    const dataIdCheck = e.target.getAttribute('complete-item');
+
+    const keyTodoItem = e.target.getAttribute('data-key');
+    const eventObject = getTodoObjectById(keyTodoItem,LIST);
 
     switch (dataType) {
         case 'remove':
-            trashEventFromArray(dataIdRemove); // change flag on props trash
-            removedLIST = LIST.filter((item) => item.todoItemObject.trash == true);
-            LIST = LIST.filter((item) => item.todoItemObject.trash == false);
+            eventObject.todoItemObject.trash = true;
+
+            if(!eventObject.todoItemObject.complete){
+                // get item with props trash = true and put to removedLIST
+                removedLIST = LIST.filter((item) => item.todoItemObject.trash == true); 
+            }else{
+                const eventObjectInCompleteList = getTodoObjectById(keyTodoItem,completeLIST);
+                completeLIST = removeFromArray(keyTodoItem,completeLIST);
+                removedLIST.push(eventObjectInCompleteList);
+            }
+
+            notCompleteLIST = LIST.filter((item) => item.todoItemObject.trash == false);
+            
             todoList.removeChild(item); // remove eventItem from DOM
-            setCounter(LIST); // counter for trash
+            setCounter(notCompleteLIST); // counter for complete events
+
+            checkOnItem();
+
             break;
+
         case 'complate':
-            item.classList.toggle('complate');
-            checkEventFromArray(dataIdCheck, item.classList.contains('complate') ? true : false);
-            completeLIST = LIST.filter((item) => item.todoItemObject.complete == true);
-            setCounter(LIST); // counter for events
+            if(eventObject.todoItemObject.complete){
+                item.classList.remove('complate');
+                eventObject.todoItemObject.complete = false;
+            }else{
+                item.classList.add('complate');
+                eventObject.todoItemObject.complete = true;
+            }
+            
+            // get item with props complete = true and put to removedLIST
+            completeLIST = LIST.filter((item) => {
+                return item.todoItemObject.complete == true && item.todoItemObject.trash == false
+            });
+            // get item with props complete = false and put to removedLIST
+            notCompleteLIST = LIST.filter((item) => {
+                return item.todoItemObject.complete == false && item.todoItemObject.trash == false
+            });
+
+            setCounter(notCompleteLIST);
+
             break;
+
         default:
+
             break;
     }
 })
 
+function removeFromArray(id,array){
+    for(let i = 0; i < array.length; i++){
+        if(array[i].todoItemObject.id == id){
+            array.splice(array[i],1);
+        }
+    }
+    return array;
+}
+
+function getTodoObjectById(id, array){
+    for (let i = 0; i <= array.length - 1; i++) {
+        if (array[i].todoItemObject.id == id) {
+            return array[i];
+        }
+    }
+}
 
 filterList.addEventListener('click', (e) => {
     let dataType = e.target.getAttribute('data-active');
-
 });
-
 
 function create() {
     if (input.value === '') {
@@ -63,6 +110,7 @@ function create() {
         LIST.push({ i, todoItemObject });
         setCounter(LIST) // counter for events
         checkOnItem(); // visual check event
+        
         i++;
     }
 }
@@ -73,39 +121,5 @@ function setCounter(array) {
 
 function checkOnItem() {
     let items = document.querySelectorAll('.todo-item');
-    (items) ? todoWrapper.classList.add('show') : todoWrapper.classList.remove('show');
+    (items.length > 0) ? todoWrapper.classList.add('show') : todoWrapper.classList.remove('show');
 }
-
-function checkEventFromArray(id, flag) {
-    for (let i = 0; i <= LIST.length - 1; i++) {
-        if (LIST[i].todoItemObject.id == id) {
-            flag ? LIST[i].todoItemObject.complete = flag : LIST[i].todoItemObject.complete = flag
-        }
-    }
-}
-
-function trashEventFromArray(id) {
-    for (let i = 0; i <= LIST.length - 1; i++) {
-        if (LIST[i].todoItemObject.id == id) {
-            LIST[i].todoItemObject.trash = true;
-        }
-    }
-}
-
-function removeEventFromArray(id) {
-    for (let i = 0; i <= LIST.length - 1; i++) {
-        if (LIST[i].todoItemObject.id = id) {
-            LIST.splice(LIST[i], 1);
-        }
-    }
-}
-
-// function removeEventFromArray(id,toArray) {
-//     for (let i = 0; i <= LIST.length - 1; i++) {
-//         if (LIST[i].todoItemObject.id = id) {
-
-//             toArray.push(LIST[i]);
-//             break;
-//         }
-//     }
-// }
