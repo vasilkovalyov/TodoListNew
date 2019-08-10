@@ -11,7 +11,6 @@ const todoWrapper = document.querySelector('.main-todo-wrapper');
 const filterList = document.querySelector('.tab-list-links');
 
 let LIST = []; // array for event items
-let leftLIST = []; // array for event who else not complete
 let removedLIST = []; // array for removed event items
 let completeLIST = []; // array for completed event items
 let notCompleteLIST = []; // array for not completed event items
@@ -34,19 +33,16 @@ todoWrapper.addEventListener('click', (e) => {
             eventObject.todoItemObject.trash = true;
 
             if(!eventObject.todoItemObject.complete){
-                // get item with props trash = true and put to removedLIST
                 removedLIST = LIST.filter((item) => item.todoItemObject.trash == true); 
             }else{
-                const eventObjectInCompleteList = getTodoObjectById(keyTodoItem,completeLIST);
+                const todoEventInCompleteList = getTodoObjectById(keyTodoItem,completeLIST);
                 completeLIST = removeFromArray(keyTodoItem,completeLIST);
-                removedLIST.push(eventObjectInCompleteList);
+                removedLIST.push(todoEventInCompleteList);
             }
 
             notCompleteLIST = LIST.filter((item) => item.todoItemObject.trash == false);
-            
-            todoList.removeChild(item); // remove eventItem from DOM
-            setCounter(notCompleteLIST); // counter for complete events
-
+            todoList.removeChild(item); 
+            setCounter(LIST); // counter for remaining events
             checkOnItem();
 
             break;
@@ -69,7 +65,7 @@ todoWrapper.addEventListener('click', (e) => {
                 return item.todoItemObject.complete == false && item.todoItemObject.trash == false
             });
 
-            setCounter(notCompleteLIST);
+            setCounter(LIST); // counter for remaining events
 
             break;
 
@@ -108,15 +104,18 @@ function create() {
         input.value = '';
         todoList.appendChild(todoItemObject.renderTodoItem()); // add event in DOM events list
         LIST.push({ i, todoItemObject });
-        setCounter(LIST) // counter for events
+        setCounter(LIST) // counter for remaining events
         checkOnItem(); // visual check event
-        
         i++;
     }
 }
 
 function setCounter(array) {
-    counterLeftTodoItems.innerText = array.length;
+    const latestTodoItems = array.filter((item) => {
+        return item.todoItemObject.complete == false && item.todoItemObject.trash == false;
+    });
+
+    counterLeftTodoItems.innerText = latestTodoItems.length;
 }
 
 function checkOnItem() {
