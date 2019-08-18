@@ -2,27 +2,42 @@ export class TodoItem {
     constructor(id, text) {
         this.id = id;
         this.text = text;
-        this.complete = false;
+        this.complate = false;
         this.trash = false;
     }
 
-
-    renderTodoItem = () => {
-        const li = document.createElement('li');
-        li.setAttribute('id', this.id);
-        li.classList.add('todo-item');
-        const todoContent = `
-            <label>
-                <input type="checkbox">
-                <span class="todo-item-check" data-key='${this.id}' data-type='complate'></span>
-            </label>
-            <span class="todo-item-text">${this.text}</span>
-            <span class="todo-item-remove" data-key='${this.id}' data-type='remove'></span>
-        `;
-        li.insertAdjacentHTML('afterbegin', todoContent);
-
-        return li;
+    get Id(){
+        return this.id;
     }
 
+    get Complate() {
+        return this.complate;
+    }
+
+    set Complate(value) {
+        this.complate = value;
+    }
+
+    get Trash(){
+        return this.trash;
+    }
+
+    set Trash(value){
+        this.trash = value;
+    }
+
+    renderTodoItem = () => {
+        const li = `
+            <li id=${this.id} class='todo-item'>
+                <label>
+                    <input type="checkbox">
+                    <span class="todo-item-check" data-key='${this.id}' data-type='complate' complate-btn></span>
+                </label>
+                <span class="todo-item-text">${this.text}</span>
+                <span class="todo-item-remove" data-key='${this.id}' data-type='remove' remove-btn></span>
+            </li>
+        `;
+        return li;
+    }
 }
 
