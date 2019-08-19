@@ -21,17 +21,20 @@ include pug/common/_head
 											.counter 0
 											.text items left
 										ul.tab-list-links.d-flex.align-items-center
-											li.all(
-												data-active='all'
-											)
-												a(href='#') All
-											li.active(
-												data-active='active'
-											)
-												a(href='#') Active
-											li.compated(
-												data-active='complated'
-											)
-												a(href='#') Complated
+											li
+												a(
+													href='#'
+													data-active='all'
+												) All
+											li
+												a(
+													href='#'
+													data-active='active'
+												) Active
+											li
+												a(
+													href='#' 
+													data-active='complated'
+												) Complated
 										a(href='#').clear-all.text-center Clear complated
 

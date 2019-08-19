@@ -6,10 +6,13 @@ export class TodoList{
         this.removedLIST = new Map();
         this.complateLIST = new Map();
         this.notComplateLIST = new Map();
+
         this.input = document.querySelector('.input-holder input[type="text"]');
         this.todoWrapper = document.querySelector('.main-todo-wrapper');
         this.todoList = document.querySelector('.todo-list');
         this.counter = 0;
+
+        this.counterLeftTodoItems = document.querySelector('.left-items .counter');
     }
 
     get Counter(){
@@ -25,11 +28,53 @@ export class TodoList{
         const todoItemObject = new TodoItem(this.counter, this.input.value, false);
         this.input.value = '';
         this.todoList.insertAdjacentHTML("afterbegin", todoItemObject.renderTodoItem()); // add event in DOM events list
-        this.LIST.set( counter, todoItemObject ); // add event to map array
+        this.LIST.set( counter, todoItemObject );
+        this.notComplateLIST.set( counter, todoItemObject );
         this.counter++;
         this.checkOnItem(); // visual check event
+
+        this.setCounterEvents(this.getCouterLatestEvents());
     }
-    
+
+    removeEvent(target){
+        const id = target.getAttribute('id');
+        const object = this.getObjectById(id,this.LIST);
+        object.Trash = true;
+
+        if(object.Complate){
+            this.movingThroughArraysById(id, this.complateLIST, this.removedLIST);
+            this.removeFormArrayById(id, this.complateLIST);
+        }else{
+            this.movingThroughArraysById(id, this.LIST, this.removedLIST);
+        }
+
+        this.removeFormArrayById(id, this.LIST);
+        this.removeFormArrayById(id, this.notComplateLIST);
+        this.setCounterEvents(this.getCouterLatestEvents());
+        this.removeFromDomList(target);
+        this.checkOnItem();
+    }
+
+    complateEvent(target){
+        const id = target.getAttribute('id');
+        const object = this.getObjectById(id,this.LIST);
+
+        if(object.Complate){
+            object.Complate = false;
+            this.movingThroughArraysById(id, this.complateLIST, this.notComplateLIST);
+            this.removeFormArrayById(id, this.complateLIST);
+            target.classList.remove('complate');
+
+        }else{
+            object.Complate = true;
+            this.movingThroughArraysById(id, this.LIST, this.complateLIST);
+            this.removeFormArrayById(id, this.notComplateLIST);
+            target.classList.add('complate');
+        }
+
+        this.setCounterEvents(this.getCouterLatestEvents());
+    }
+
     getObjectById(id, mapArray){
         for(let item of mapArray.entries()){
             if(item[0] == id){
@@ -38,7 +83,7 @@ export class TodoList{
         }
     }
 
-    removeFormArrayById(id,mapArray){
+    removeFormArrayById(id, mapArray){
         for(let key of mapArray.keys()){
             if(key == id){
                 mapArray.delete(key)
@@ -98,5 +143,26 @@ export class TodoList{
             }
         }
         return latestArray.size;
+    }
+
+    filterEventsByType(mapArray){
+        this.removeAllChildren();
+        for(let item of mapArray.entries()){
+            this.todoList.insertAdjacentHTML("afterbegin", item[1].renderTodoItem());
+            const check = document.querySelector('.todo-item');
+            if(item[1].Complate){
+                check.classList.add('complate');
+            }
+        }
+    }
+
+    removeAllChildren(){
+        while (this.todoList.firstChild) {
+            this.todoList.removeChild( this.todoList.firstChild);
+        }
+    }
+
+    setCounterEvents(counter){
+        this.counterLeftTodoItems.innerHTML = counter;
     }
 }

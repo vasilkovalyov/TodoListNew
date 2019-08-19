@@ -29,14 +29,12 @@ export class TodoItem {
     renderTodoItem = () => {
         const li = `
             <li id=${this.id} class='todo-item'>
-                <label>
-                    <input type="checkbox">
-                    <span class="todo-item-check" data-key='${this.id}' data-type='complate' complate-btn></span>
-                </label>
+                <span class="todo-item-check" data-key='${this.id}' data-type='complate' complate-btn></span>
                 <span class="todo-item-text">${this.text}</span>
                 <span class="todo-item-remove" data-key='${this.id}' data-type='remove' remove-btn></span>
             </li>
         `;
+
         return li;
     }
 }

@@ -1463,12 +1463,8 @@ a[href^=skype] {
     opacity: 0.5; }
     .todo-item.complate .todo-item-text:before {
       width: 100%; }
-  .todo-item label {
-    margin-bottom: 0; }
-  .todo-item input[type='checkbox'] {
-    display: none; }
-    .todo-item input[type='checkbox']:checked + .todo-item-check:after {
-      transform: translate(-50%, -50%) scale(1); }
+  .todo-item.complate .todo-item-check:after {
+    transform: translate(-50%, -50%) scale(1); }
 
 .todo-item-check {
   position: relative;
@@ -1548,7 +1544,7 @@ a[href^=skype] {
     background-color: transparent;
     padding: 5px;
     transition: 0.5s color ease-in-out, 0.5s background-color ease-in-out; }
-    .tab-list-links a:hover {
+    .tab-list-links a.active, .tab-list-links a:hover {
       background-color: #0066FF;
       color: #fff;
       text-decoration: none; }
