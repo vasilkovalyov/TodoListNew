@@ -6,33 +6,19 @@ export class TodoList{
         this.removedLIST = new Map();
         this.complateLIST = new Map();
         this.notComplateLIST = new Map();
-
-        this.input = document.querySelector('.input-holder input[type="text"]');
-        this.todoWrapper = document.querySelector('.main-todo-wrapper');
         this.todoList = document.querySelector('.todo-list');
-        this.counter = 0;
-
         this.counterLeftTodoItems = document.querySelector('.left-items .counter');
+        this.counter = 0;
     }
 
-    get Counter(){
-        return this.counter;
-    }
-
-    set Counter(value){
-        this.counter = value;
-    }
-
-    createTodoEvent(){
+    createTodoEvent(inputValue){
         const counter = this.counter;
-        const todoItemObject = new TodoItem(this.counter, this.input.value, false);
-        this.input.value = '';
-        this.todoList.insertAdjacentHTML("afterbegin", todoItemObject.renderTodoItem()); // add event in DOM events list
+        const todoItemObject = new TodoItem(this.counter, inputValue, false);
+        this.todoList.insertAdjacentHTML("afterbegin", todoItemObject.renderTodoItem());
         this.LIST.set( counter, todoItemObject );
         this.notComplateLIST.set( counter, todoItemObject );
         this.counter++;
-        this.checkOnItem(); // visual check event
-
+        this.checkOnItem();
         this.setCounterEvents(this.getCouterLatestEvents());
     }
 
@@ -125,8 +111,10 @@ export class TodoList{
     }
 
     checkOnItem() {
+        const todoWrapper = document.querySelector('.main-todo-wrapper');
+        
         let items = document.querySelectorAll('.todo-item');
-        (items.length > 0) ? this.todoWrapper.classList.add('show') : this.todoWrapper.classList.remove('show');
+        (items.length > 0) ? todoWrapper.classList.add('show') : todoWrapper.classList.remove('show');
     }
 
     removeFromDomList(object){
